@@ -1,3 +1,3 @@
-import { URL } from './urls';
+import { url } from './urls';
 
-export default URL;
+export default url;

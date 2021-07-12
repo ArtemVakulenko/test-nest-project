@@ -16,7 +16,7 @@ import {
 import { UsersService } from './users.service';
 import { User } from '../database/entities/User.entity';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
-// import { URL } from '../constants';
+import url from '../constants';
 
 @ApiBearerAuth()
 @ApiTags('users')
