@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../database/entities/User.entity';
+import { IUser } from './interface/users.interface';
 
 @Injectable()
 export class UsersService {
@@ -9,11 +10,11 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
-  findAll(): Promise<User[]> {
+  findAll(): Promise<IUser[]> {
     return this.usersRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
+  findOne(id: number): Promise<IUser> {
     return this.usersRepository.findOne(id);
   }
 

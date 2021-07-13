@@ -15,8 +15,8 @@ import {
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { User } from '../database/entities/User.entity';
+import { IUser } from './interface/users.interface';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
-// import url from '../constants/urls';
 
 @ApiBearerAuth()
 @ApiTags('users')
@@ -30,12 +30,12 @@ export class UsersController {
     description: 'The found record',
     type: User,
   })
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<IUser[]> {
     return this.UsersService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<User> {
+  async findOne(@Param('id') id: number): Promise<IUser> {
     return this.UsersService.findOne(id);
   }
 
@@ -47,8 +47,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<void> {
-    return this.UsersService.deleteOne(id);
+  async delete(@Param('id') userId: number): Promise<void> {
+    return this.UsersService.deleteOne(userId);
   }
 
   @Put()
