@@ -16,8 +16,9 @@ export class PostsService {
   ) {}
 
   async findAll(): Promise<IPost[]> {
-    const posts = await this.postsRepository.find();
-    console.log(posts);
+    const posts = await this.postsRepository.find({
+      relations: ['user'],
+    });
     return posts;
   }
 
@@ -29,11 +30,10 @@ export class PostsService {
   }
 
   async createPost(body: createPostDTO): Promise<void> {
-    const { content, user } = body;
+    // const { content, userId } = body;
     const post = await this.postsRepository.create(body);
-    const author = await this.usersRepository.findOne({ id: user.id });
+    const author = await this.usersRepository.findOne({ id: body.userId });
     post.user = author;
-    console.log(post);
     await this.postsRepository.save(post);
   }
 }
