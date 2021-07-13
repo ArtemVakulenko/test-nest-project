@@ -22,21 +22,16 @@ export class PostsService {
   }
 
   findAllByUserId(id: number): Promise<IPost[]> {
-    return this.postsRepository.query(
-      `select * from post_entity where userId = ${id}`,
-    );
+    return this.postsRepository.find({
+      relations: ['user'],
+      where: { user: { id } },
+    });
   }
 
   async createPost(body: createPostDTO): Promise<void> {
     const { content, user } = body;
-    const post = await this.postsRepository.create({
-      content: content,
-      user: user,
-    });
+    const post = await this.postsRepository.create(body);
     const author = await this.usersRepository.findOne({ id: user.id });
-    // console.log(author);
-    // console.log(body);
-    // console.log(post);
     post.user = author;
     console.log(post);
     await this.postsRepository.save(post);
