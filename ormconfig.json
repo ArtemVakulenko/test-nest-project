@@ -5,6 +5,13 @@
   "username": "postgres",
   "password": "root",
   "database": "postgres",
-  "entities": ["dist/**/*.entity{.ts,.js}"],
-  "synchronize": true
+  "entities": ["dist/**/*.entity{ .ts,.js}"],
+  "migrations": [
+    "src/migrations/**/*.ts"
+ ],
+  "migrationsTableName": "migrations_typeorm",
+  "synchronize": false,
+  "cli": {
+    "migrationsDir": "src/migrations"
+ }
 }
