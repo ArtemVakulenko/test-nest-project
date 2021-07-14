@@ -1,4 +1,4 @@
-import { IsInt, Length } from 'class-validator';
+import { IsInt, Length, IsOptional } from 'class-validator';
 
 export class createCommentDTO {
   @Length(1, 100)
@@ -7,8 +7,9 @@ export class createCommentDTO {
   @IsInt()
   userId: number;
 
+  @IsOptional()
   @IsInt()
-  parentComment: number | null;
+  parentCommentId?: number;
 
   @IsInt()
   postId: number;

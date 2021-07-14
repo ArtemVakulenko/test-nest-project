@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IComment } from './interface/comments.interface';
 import { User } from 'src/database/entities/User.entity';
 import { CommentEntity } from 'src/database/entities/Comment.entity';
+import { createCommentDTO } from './dto/comments.dto';
 
 @Injectable()
 export class CommentsService {
@@ -13,18 +14,46 @@ export class CommentsService {
     private postsRepository: Repository<PostEntity>,
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    @InjectRepository(User)
+    @InjectRepository(CommentEntity)
     private commentsRepository: Repository<CommentEntity>,
   ) {}
 
-  findAll(): Promise<CommentEntity[]> {
-    return this.commentsRepository.find();
+  findAll(): Promise<IComment[]> {
+    return this.commentsRepository.find({
+      relations: ['user', 'post', 'parentComment'],
+    });
   }
-  async findAllByPostId(id: number): Promise<CommentEntity[]> {
+  async findAllByPostId(id: number): Promise<IComment[]> {
     const posts = await this.commentsRepository.find({
       relations: ['user', 'post'],
       where: { post: { id } },
     });
     return posts;
+  }
+
+  async findAllByUserId(id: number): Promise<IComment[]> {
+    const posts = await this.commentsRepository.find({
+      relations: ['user', 'post'],
+      where: { user: { id } },
+    });
+    return posts;
+  }
+
+  async createComment(body: createCommentDTO): Promise<void> {
+    let parentComment;
+    const { content, userId, parentCommentId, postId } = body;
+    const comment = await this.commentsRepository.create(body);
+    const commentPost = await this.postsRepository.findOne({ id: postId });
+    const author = await this.usersRepository.findOne({ id: userId });
+    if (parentCommentId) {
+      parentComment = await this.commentsRepository.findOne({
+        id: parentCommentId,
+      });
+    }
+
+    comment.post = commentPost;
+    comment.user = author;
+    comment.parent_comment = parentComment;
+    await this.commentsRepository.save(comment);
   }
 }
