@@ -1,12 +1,11 @@
 import {
-  Body,
-  Controller,
   Get,
+  Put,
+  Body,
   Post,
   Param,
   Delete,
-  Put,
-  UseGuards,
+  Controller,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -19,7 +18,7 @@ import { User } from '../database/entities/User.entity';
 import { IUser } from './interface/users.interface';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
 import urls from '../constants/urls';
-import { AuthGuard } from '@nestjs/passport';
+// import { Public } from 'src/helpers.ts/customDecorators';
 
 @ApiBearerAuth()
 @ApiTags('users')
@@ -27,6 +26,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class UsersController {
   constructor(private UsersService: UsersService) {}
 
+  // @Public()
   @Get()
   @ApiResponse({
     status: 200,
@@ -48,13 +48,6 @@ export class UsersController {
   async create(@Body() postUserDTO: postUserDTO): Promise<void> {
     return this.UsersService.create(postUserDTO);
   }
-
-  // @UseGuards(AuthGuard('local'))
-  // @Post('/login')
-  // async login(@Body() postUserDTO: postUserDTO): Promise<void> {
-  //   const user = await this.UsersService.findOnByUserName(postUserDTO.userName);
-  //   return await this.AuthService.validateUser(user.userName, user.password);
-  // }
 
   @Delete(`:${urls.id}`)
   async delete(@Param(`${urls.id}`) userId: number): Promise<void> {
