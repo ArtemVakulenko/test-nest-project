@@ -18,5 +18,6 @@ const jwtConfig = {
   imports: [UsersModule, PassportModule, JwtModule.register(jwtConfig)],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Controller,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -18,11 +19,13 @@ import { User } from '../database/entities/User.entity';
 import { IUser } from './interface/users.interface';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
 import urls from '../constants/urls';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 // import { Public } from 'src/helpers.ts/customDecorators';
 
 @ApiBearerAuth()
 @ApiTags('users')
 @Controller(urls.users)
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private UsersService: UsersService) {}
 
