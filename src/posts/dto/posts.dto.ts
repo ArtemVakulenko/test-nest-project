@@ -1,5 +1,4 @@
 import { IsInt, Length } from 'class-validator';
-// import { User } from 'src/database/entities/User.entity';
 
 export class createPostDTO {
   @IsInt()

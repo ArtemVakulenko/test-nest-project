@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -17,10 +18,12 @@ import { UsersService } from './users.service';
 import { User } from '../database/entities/User.entity';
 import { IUser } from './interface/users.interface';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
+import urls from '../constants/urls';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiBearerAuth()
 @ApiTags('users')
-@Controller('users')
+@Controller(urls.users)
 export class UsersController {
   constructor(private UsersService: UsersService) {}
 
@@ -34,8 +37,8 @@ export class UsersController {
     return this.UsersService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: number): Promise<IUser> {
+  @Get(`:${urls.id}`)
+  async findOne(@Param(`${urls.id}`) id: number): Promise<IUser> {
     return this.UsersService.findOne(id);
   }
 
@@ -46,8 +49,15 @@ export class UsersController {
     return this.UsersService.create(postUserDTO);
   }
 
-  @Delete(':id')
-  async delete(@Param('id') userId: number): Promise<void> {
+  // @UseGuards(AuthGuard('local'))
+  // @Post('/login')
+  // async login(@Body() postUserDTO: postUserDTO): Promise<void> {
+  //   const user = await this.UsersService.findOnByUserName(postUserDTO.userName);
+  //   return await this.AuthService.validateUser(user.userName, user.password);
+  // }
+
+  @Delete(`:${urls.id}`)
+  async delete(@Param(`${urls.id}`) userId: number): Promise<void> {
     return this.UsersService.deleteOne(userId);
   }
 

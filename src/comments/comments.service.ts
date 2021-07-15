@@ -20,12 +20,12 @@ export class CommentsService {
 
   findAll(): Promise<IComment[]> {
     return this.commentsRepository.find({
-      relations: ['user', 'post', 'parentComment'],
+      relations: ['user', 'post', 'parent_comment'],
     });
   }
   async findAllByPostId(id: number): Promise<IComment[]> {
     const posts = await this.commentsRepository.find({
-      relations: ['user', 'post'],
+      relations: ['user', 'post', 'parent_comment'],
       where: { post: { id } },
     });
     return posts;
@@ -33,7 +33,7 @@ export class CommentsService {
 
   async findAllByUserId(id: number): Promise<IComment[]> {
     const posts = await this.commentsRepository.find({
-      relations: ['user', 'post'],
+      relations: ['user', 'post', 'parent_comment'],
       where: { user: { id } },
     });
     return posts;
@@ -41,7 +41,7 @@ export class CommentsService {
 
   async createComment(body: createCommentDTO): Promise<void> {
     let parentComment;
-    const { content, userId, parentCommentId, postId } = body;
+    const { userId, parentCommentId, postId } = body;
     const comment = await this.commentsRepository.create(body);
     const commentPost = await this.postsRepository.findOne({ id: postId });
     const author = await this.usersRepository.findOne({ id: userId });
@@ -50,7 +50,6 @@ export class CommentsService {
         id: parentCommentId,
       });
     }
-
     comment.post = commentPost;
     comment.user = author;
     comment.parent_comment = parentComment;

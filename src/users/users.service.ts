@@ -18,6 +18,10 @@ export class UsersService {
     return this.usersRepository.findOne(id);
   }
 
+  findOnByUserName(userName: string): Promise<IUser> {
+    return this.usersRepository.findOne({ userName });
+  }
+
   async create(postUserDTO): Promise<void> {
     const user = await this.usersRepository.create(postUserDTO);
     await this.usersRepository.save(user);

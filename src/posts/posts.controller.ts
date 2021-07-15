@@ -1,31 +1,19 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Param,
-  Delete,
-  Put,
-} from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Param } from '@nestjs/common';
 
 import { PostsService } from './posts.service';
 import { PostEntity } from '../database/entities/Post.entity';
 import { IPost } from './interface/posts.interface';
 import { createPostDTO } from '../posts/dto/posts.dto';
-@Controller('posts')
+import urls from 'src/constants/urls';
+
+@Controller(urls.posts)
 export class PostsController {
   constructor(private PostsService: PostsService) {}
   @Get()
   async findAll(): Promise<IPost[]> {
     return this.PostsService.findAll();
   }
-  @Get(':id')
+  @Get(`:${urls.id}`)
   async findAllByUserId(@Param('id') id: number): Promise<IPost[]> {
     return this.PostsService.findAllByUserId(id);
   }
