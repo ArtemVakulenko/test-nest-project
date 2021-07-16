@@ -5,7 +5,7 @@ import { PostEntity } from '../database/entities/Post.entity';
 import { IPost } from './interface/posts.interface';
 import { createPostDTO } from '../posts/dto/posts.dto';
 import urls from 'src/constants/urls';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller(urls.posts)
 @UseGuards(JwtAuthGuard)

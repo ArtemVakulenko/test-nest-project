@@ -6,12 +6,16 @@ import { CommentEntity } from './Comment.entity';
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column({ nullable: true })
   userName: string;
+
   @Column({ nullable: true })
   password: string;
+
   @Column()
   email: string;
+
   @Column({ nullable: true })
   provider: string;
 

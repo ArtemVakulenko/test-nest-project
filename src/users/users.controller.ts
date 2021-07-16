@@ -19,7 +19,7 @@ import { UserEntity } from '../database/entities/User.entity';
 import { IUser } from './interface/users.interface';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
 import urls from '../constants/urls';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 // import { Public } from 'src/helpers.ts/customDecorators';
 
 @ApiBearerAuth()

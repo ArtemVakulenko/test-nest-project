@@ -24,6 +24,7 @@ export class CommentEntity {
   @ManyToOne(() => PostEntity, (PostEntity) => PostEntity.comments)
   @JoinColumn()
   post: PostEntity;
+
   @OneToOne(
     () => CommentEntity,
     (CommentEntity) => CommentEntity.parent_comment,
