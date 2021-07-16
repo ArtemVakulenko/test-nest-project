@@ -6,12 +6,10 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
-// import * as dotenv from 'dotenv';
-// dotenv.config({ path: '../../../.env' });
 
 const jwtConfig = {
   secret: '123',
-  signOptions: { expiresIn: '600s' },
+  signOptions: { expiresIn: '10h' },
 };
 
 @Module({

@@ -10,6 +10,7 @@ export class UsersService {
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
   ) {}
+
   findAll(): Promise<IUser[]> {
     return this.usersRepository.find();
   }
@@ -18,8 +19,12 @@ export class UsersService {
     return this.usersRepository.findOne(id);
   }
 
-  findOnByUserName(userName: string): Promise<IUser> {
+  findOneByUserName(userName: string): Promise<IUser> {
     return this.usersRepository.findOne({ userName });
+  }
+
+  findOneByEmail(email: string): Promise<IUser> {
+    return this.usersRepository.findOne({ email });
   }
 
   async create(postUserDTO): Promise<void> {

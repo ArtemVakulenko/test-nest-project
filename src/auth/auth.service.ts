@@ -12,7 +12,7 @@ export class AuthService {
   ) {}
 
   async validateUser(userName: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOnByUserName(userName);
+    const user = await this.usersService.findOneByUserName(userName);
     if (user && user.password === pass) {
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
@@ -27,7 +27,9 @@ export class AuthService {
     };
   }
 
-  async registrate(user: regDTO): Promise<void> {
+  async registrate(user: regDTO): Promise<any> {
+    const sameUser = await this.usersService.findOneByEmail(user.email);
+    if (sameUser) return { message: 'already exists' };
     await this.usersService.create(user);
   }
 }

@@ -1,11 +1,12 @@
-import { Body, Controller, Get, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, UseGuards } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { IComment } from './interface/comments.interface';
-import { CommentEntity } from 'src/database/entities/Comment.entity';
 import { createCommentDTO } from './dto/comments.dto';
 import urls from '../constants/urls';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller(urls.comments)
+@UseGuards(JwtAuthGuard)
 export class CommentsController {
   constructor(private CommentsService: CommentsService) {}
 
