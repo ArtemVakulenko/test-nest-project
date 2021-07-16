@@ -15,7 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { User } from '../database/entities/User.entity';
+import { UserEntity } from '../database/entities/User.entity';
 import { IUser } from './interface/users.interface';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
 import urls from '../constants/urls';
@@ -34,7 +34,7 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: User,
+    type: UserEntity,
   })
   async findAll(): Promise<IUser[]> {
     return this.UsersService.findAll();

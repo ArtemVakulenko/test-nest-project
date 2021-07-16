@@ -6,7 +6,7 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { User } from './User.entity';
+import { UserEntity } from './User.entity';
 import { CommentEntity } from './Comment.entity';
 
 @Entity()
@@ -17,9 +17,9 @@ export class PostEntity {
   @Column()
   content: string;
 
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => UserEntity, (user) => user.posts)
   @JoinColumn()
-  user: User;
+  user: UserEntity;
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)
   @JoinColumn()

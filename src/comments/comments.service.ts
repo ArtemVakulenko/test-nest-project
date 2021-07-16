@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { PostEntity } from '../database/entities/Post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IComment } from './interface/comments.interface';
-import { User } from 'src/database/entities/User.entity';
+import { UserEntity } from 'src/database/entities/User.entity';
 import { CommentEntity } from 'src/database/entities/Comment.entity';
 import { createCommentDTO } from './dto/comments.dto';
 
@@ -12,8 +12,8 @@ export class CommentsService {
   constructor(
     @InjectRepository(PostEntity)
     private postsRepository: Repository<PostEntity>,
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private usersRepository: Repository<UserEntity>,
     @InjectRepository(CommentEntity)
     private commentsRepository: Repository<CommentEntity>,
   ) {}

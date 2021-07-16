@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PostEntity } from '../database/entities/Post.entity';
-import { User } from 'src/database/entities/User.entity';
+import { UserEntity } from 'src/database/entities/User.entity';
 import { createPostDTO } from './dto/posts.dto';
 import { IPost } from './interface/posts.interface';
 
@@ -11,8 +11,8 @@ export class PostsService {
   constructor(
     @InjectRepository(PostEntity)
     private postsRepository: Repository<PostEntity>,
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private usersRepository: Repository<UserEntity>,
   ) {}
 
   async findAll(): Promise<IPost[]> {
