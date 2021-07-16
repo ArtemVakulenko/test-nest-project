@@ -17,6 +17,9 @@ export class PostEntity {
   @Column()
   content: string;
 
+  @Column()
+  likes: number;
+
   @ManyToOne(() => UserEntity, (user) => user.posts)
   @JoinColumn()
   user: UserEntity;

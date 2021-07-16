@@ -17,6 +17,9 @@ export class CommentEntity {
   @Column()
   content: string;
 
+  @Column()
+  likes: number;
+
   @ManyToOne(() => UserEntity, (user) => user.comments)
   @JoinColumn()
   user: UserEntity;

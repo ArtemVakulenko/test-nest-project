@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class CommentEntity {
+export class FriendRequestEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
