@@ -5,6 +5,7 @@ import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AppController } from './app.controller';
     PostsModule,
     CommentsModule,
     AuthModule,
+    MessagesModule,
   ],
   controllers: [AppController],
 })
