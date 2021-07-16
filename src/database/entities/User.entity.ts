@@ -6,12 +6,14 @@ import { CommentEntity } from './Comment.entity';
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column({ nullable: true })
   userName: string;
-  @Column()
+  @Column({ nullable: true })
   password: string;
   @Column()
   email: string;
+  @Column({ nullable: true })
+  provider: string;
 
   @OneToMany(() => PostEntity, (post) => post.user)
   posts: PostEntity[];

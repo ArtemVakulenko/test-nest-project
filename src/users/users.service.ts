@@ -32,6 +32,11 @@ export class UsersService {
     await this.usersRepository.save(user);
   }
 
+  async createGoogleAccount(postUserDTO): Promise<void> {
+    const user = await this.usersRepository.create(postUserDTO);
+    await this.usersRepository.save(user);
+  }
+
   async deleteOne(id): Promise<void> {
     await this.usersRepository.delete(id);
   }

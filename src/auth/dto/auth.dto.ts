@@ -21,3 +21,10 @@ export class regDTO {
   @Length(5, 25)
   password: string;
 }
+
+export class googleLoginDTO {
+  @IsEmail()
+  email: string;
+
+  provider: string;
+}
