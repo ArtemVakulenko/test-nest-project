@@ -8,6 +8,7 @@ import {
   Controller,
   UseGuards,
   UseInterceptors,
+  Res,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -25,7 +26,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadedFile } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-// import { Public } from 'src/helpers.ts/customDecorators';
 
 @ApiBearerAuth()
 @ApiTags('users')
@@ -34,7 +34,6 @@ import { extname } from 'path';
 export class UsersController {
   constructor(private UsersService: UsersService) {}
 
-  // @Public()
   @Get()
   @ApiResponse({
     status: 200,
@@ -50,6 +49,12 @@ export class UsersController {
     return this.UsersService.findOne(id);
   }
 
+  @Get('avatars/:id')
+  async serveAvatar(@Param('id') id, @Res() res): Promise<any> {
+    const user = await this.UsersService.findOne(id);
+    res.sendFile(user.avatar, { root: 'uploads/avatars' });
+  }
+
   @Post()
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({ status: 201 })
@@ -58,9 +63,21 @@ export class UsersController {
   }
 
   @Post(':id/upload')
-  @UseInterceptors(FileInterceptor('file', { dest: 'uploads/avatars' }))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: 'uploads/avatars',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          return cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    }),
+  )
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Param('id') id) {
-    // console.log(file);
     return this.UsersService.uploadFile(file, id);
   }
 
