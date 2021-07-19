@@ -39,6 +39,10 @@ export class CommentsService {
     return posts;
   }
 
+  async addLike(id: number): Promise<void> {
+    await this.commentsRepository.increment({ id }, 'likes', 1);
+  }
+
   async createComment(body: createCommentDTO): Promise<void> {
     let parentComment;
     const { userId, parentCommentId, postId } = body;
@@ -53,6 +57,7 @@ export class CommentsService {
     comment.post = commentPost;
     comment.user = author;
     comment.parent_comment = parentComment;
+    comment.likes = 0;
     await this.commentsRepository.save(comment);
   }
 }

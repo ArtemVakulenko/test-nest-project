@@ -7,4 +7,5 @@ export class IComment {
   parentComment?: IComment;
   user: IUser;
   post: IPost;
+  likes: number;
 }

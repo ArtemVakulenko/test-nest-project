@@ -28,12 +28,15 @@ export class PostsService {
       where: { user: { id } },
     });
   }
+  async addLike(id) {
+    await this.postsRepository.increment({ id }, 'likes', 1);
+  }
 
   async createPost(body: createPostDTO): Promise<void> {
-    // const { content, userId } = body;
     const post = await this.postsRepository.create(body);
     const author = await this.usersRepository.findOne({ id: body.userId });
     post.user = author;
+    post.likes = 0;
     await this.postsRepository.save(post);
   }
 }

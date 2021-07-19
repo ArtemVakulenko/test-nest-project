@@ -23,7 +23,10 @@ export class CommentsController {
   async findAllByUserId(@Param('id') userId: number): Promise<IComment[]> {
     return this.CommentsService.findAllByUserId(userId);
   }
-
+  @Get(':id/likes')
+  async addLike(@Param('id') id: number): Promise<void> {
+    return this.CommentsService.addLike(id);
+  }
   @Post()
   createComment(@Body() createCommentDTO: createCommentDTO): Promise<void> {
     return this.CommentsService.createComment(createCommentDTO);

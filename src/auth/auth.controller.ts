@@ -8,9 +8,10 @@ import {
   Res,
   HttpStatus,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { regDTO, loginDTO } from './dto/auth.dto';
+import { GoogleAuthGuard } from './guards/google-auth.guard';
+import { FacebookAuthGuard } from './guards/facebook-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -22,19 +23,19 @@ export class AuthController {
   }
 
   @Get('google')
-  @UseGuards(AuthGuard('google'))
+  @UseGuards(GoogleAuthGuard)
   async googleLogin(): Promise<any> {
     return HttpStatus.OK;
   }
 
   @Get('facebook')
-  @UseGuards(AuthGuard('facebook'))
+  @UseGuards(FacebookAuthGuard)
   async facebookLogin(): Promise<any> {
     return HttpStatus.OK;
   }
 
   @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
+  @UseGuards(GoogleAuthGuard)
   googleLoginCallback(@Req() req, @Res() res) {
     if (req.user) {
       this.authService.loginGoogle({
@@ -46,7 +47,7 @@ export class AuthController {
   }
 
   @Get('/facebook/redirect')
-  @UseGuards(AuthGuard('facebook'))
+  @UseGuards(FacebookAuthGuard)
   async facebookLoginRedirect(@Req() body): Promise<any> {
     return {
       statusCode: HttpStatus.OK,

@@ -4,4 +4,5 @@ export class IPost {
   id: number;
   content: string;
   user: IUser;
+  likes: number;
 }
