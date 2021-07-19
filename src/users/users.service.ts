@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../database/entities/User.entity';
+import { putUserDTO } from './dto/users.dto';
 import { IUser } from './interface/users.interface';
 
 @Injectable()
@@ -26,6 +27,10 @@ export class UsersService {
   findOneByEmail(email: string): Promise<IUser> {
     return this.usersRepository.findOne({ email });
   }
+  async uploadFile(file, id) {
+    console.log(file);
+    await this.usersRepository.update(id, { avatar: file.filename });
+  }
 
   async create(postUserDTO): Promise<void> {
     const user = await this.usersRepository.create(postUserDTO);
@@ -37,11 +42,11 @@ export class UsersService {
     await this.usersRepository.save(user);
   }
 
-  async deleteOne(id): Promise<void> {
+  async deleteOne(id: number): Promise<void> {
     await this.usersRepository.delete(id);
   }
 
-  async updateOne(putUserDTO): Promise<void> {
+  async updateOne(putUserDTO: putUserDTO): Promise<void> {
     const { id, userName, password } = putUserDTO;
     await this.usersRepository.update(id, { userName, password });
   }

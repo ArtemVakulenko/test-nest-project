@@ -1,15 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  JoinTable,
+} from 'typeorm';
+import { UserEntity } from './User.entity';
 
 @Entity()
 export class FriendRequestEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  authorId: number;
+  @ManyToMany(() => UserEntity)
+  @JoinTable()
+  authorId: UserEntity[];
 
-  @Column()
-  recipientId: number;
+  @ManyToMany(() => UserEntity)
+  @JoinTable()
+  recipientId: UserEntity[];
 
   @Column()
   status: boolean;

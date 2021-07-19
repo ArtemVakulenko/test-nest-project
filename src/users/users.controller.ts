@@ -7,6 +7,7 @@ import {
   Delete,
   Controller,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -20,6 +21,10 @@ import { IUser } from './interface/users.interface';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
 import urls from '../constants/urls';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadedFile } from '@nestjs/common';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 // import { Public } from 'src/helpers.ts/customDecorators';
 
 @ApiBearerAuth()
@@ -50,6 +55,13 @@ export class UsersController {
   @ApiResponse({ status: 201 })
   async create(@Body() postUserDTO: postUserDTO): Promise<void> {
     return this.UsersService.create(postUserDTO);
+  }
+
+  @Post(':id/upload')
+  @UseInterceptors(FileInterceptor('file', { dest: 'uploads/avatars' }))
+  async uploadFile(@UploadedFile() file: Express.Multer.File, @Param('id') id) {
+    // console.log(file);
+    return this.UsersService.uploadFile(file, id);
   }
 
   @Delete(`:${urls.id}`)
