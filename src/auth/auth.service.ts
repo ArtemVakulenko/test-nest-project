@@ -3,6 +3,7 @@ import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { loginDTO, regDTO } from './dto/auth.dto';
 import { googleLoginDTO } from '../auth/dto/auth.dto';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -13,18 +14,24 @@ export class AuthService {
 
   async validateUser(userName: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByUserName(userName);
-    if (user && user.password === pass) {
+    const hash = createHash('sha256');
+    hash.update(pass);
+    const hashedPass = hash.digest('hex');
+    if (user && user.password === hashedPass) {
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
     }
     return null;
   }
 
-  async login(user: loginDTO): Promise<any> {
-    const payload = { email: user.email };
-    return {
-      token: this.jwtService.sign(payload),
-    };
+  async login(body: loginDTO): Promise<any> {
+    const payload = { email: body.email };
+    const user = await this.validateUser(body.userName, body.password);
+    if (user) {
+      return {
+        token: this.jwtService.sign(payload),
+      };
+    }
   }
 
   async loginGoogle(body: googleLoginDTO): Promise<any> {

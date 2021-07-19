@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '../database/entities/User.entity';
 import { putUserDTO } from './dto/users.dto';
 import { IUser } from './interface/users.interface';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -33,7 +34,12 @@ export class UsersService {
   }
 
   async create(postUserDTO): Promise<void> {
-    const user = await this.usersRepository.create(postUserDTO);
+    const hash = createHash('sha256');
+    hash.update(postUserDTO.password);
+    const hashedPass = hash.digest('hex');
+    const { userName, email } = postUserDTO;
+    const userToCreate = { userName, password: hashedPass, email };
+    const user = await this.usersRepository.create(userToCreate);
     await this.usersRepository.save(user);
   }
 
