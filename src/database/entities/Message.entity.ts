@@ -1,15 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinTable,
+} from 'typeorm';
+import { UserEntity } from './User.entity';
 
 @Entity()
 export class MessageEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  authorId: number;
+  @ManyToOne(() => UserEntity, (UserEntity) => UserEntity.sentMessages)
+  @JoinTable()
+  author: UserEntity;
 
-  @Column()
-  recipientId: number;
+  @ManyToOne(() => UserEntity, (UserEntity) => UserEntity.recievedMessages)
+  @JoinTable()
+  recipient: UserEntity;
 
   @Column()
   content: string;

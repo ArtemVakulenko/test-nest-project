@@ -1,9 +1,9 @@
 import { IUser } from 'src/users/interface/users.interface';
 
 export class IFriendRequest {
-  authorId: IUser[];
-  recipientId: IUser[];
-  status: boolean;
+  author: IUser;
+  recipient: IUser;
+  status: string;
 }
 
 export class createFriendRequestDTO {

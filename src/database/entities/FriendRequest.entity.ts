@@ -1,9 +1,9 @@
 import {
   Entity,
   Column,
-  ManyToMany,
   PrimaryGeneratedColumn,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { UserEntity } from './User.entity';
 
@@ -12,14 +12,14 @@ export class FriendRequestEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToMany(() => UserEntity)
+  @ManyToOne(() => UserEntity, (UserEntity) => UserEntity.sentReqs)
   @JoinTable()
-  authorId: UserEntity[];
+  author: UserEntity;
 
-  @ManyToMany(() => UserEntity)
+  @ManyToOne(() => UserEntity, (UserEntity) => UserEntity.recievedReqs)
   @JoinTable()
-  recipientId: UserEntity[];
+  recipient: UserEntity;
 
   @Column()
-  status: boolean;
+  status: string;
 }

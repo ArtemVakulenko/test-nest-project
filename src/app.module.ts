@@ -6,7 +6,6 @@ import { CommentsModule } from './comments/comments.module';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { MessagesModule } from './messages/messages.module';
-import { FriendRequestController } from './friend-request/friend-request.controller';
 import { FriendRequestModule } from './friend-request/friend-request.module';
 
 @Module({

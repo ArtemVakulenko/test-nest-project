@@ -14,7 +14,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     userName: string,
     password: string,
   ): Promise<IUser | UnauthorizedException> {
-    const user = await this.authService.validateUser(userName, password);
+    const user = await this.authService.validateUser(userName, password, false);
     if (!user) {
       throw new UnauthorizedException();
     }

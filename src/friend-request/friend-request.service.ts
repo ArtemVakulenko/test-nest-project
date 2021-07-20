@@ -18,40 +18,34 @@ export class FriendRequestService {
   ) {}
 
   async getAllMyReq(id: number): Promise<IFriendRequest[]> {
-    const reqs = await this.friendRequestRepository.find({
-      relations: ['authorId', 'recipientId'],
-      // where: { authorId: { authorId.id: id } },
+    return await this.friendRequestRepository.find({
+      relations: ['author', 'recipient'],
+      where: { author: { id } },
     });
-    console.log(reqs[0].authorId[0].id, typeof reqs[0].authorId[0].id);
-    console.log(id, typeof id);
-    // reqs.filter((el) => {
-    //   el.authorId[0].id === +id;
-    // });
-    return reqs;
   }
 
   async getAllReqsForMe(id: number): Promise<IFriendRequest[]> {
-    const reqs = await this.friendRequestRepository.find({
-      relations: ['authorId', 'recipientId'],
+    return await this.friendRequestRepository.find({
+      relations: ['author', 'recipient'],
+      where: { recipient: { id } },
     });
-    // console.log(reqs[0].recipientId[0].id);
-    // console.log(typeof +id);
-    reqs.filter((el) => {
-      el.recipientId[0].id === +id;
-    });
-    return reqs;
   }
 
   async createFriendRequest(body: createFriendRequestDTO): Promise<void> {
     const { authorId, recipientId } = body;
     const friendRequest = await this.friendRequestRepository.create({
-      status: false,
+      status: 'following',
     });
     const author = await this.usersRepository.findOne({ id: authorId });
     const recipient = await this.usersRepository.findOne({ id: recipientId });
-    friendRequest.authorId = [author];
-    friendRequest.recipientId = [recipient];
-    console.log(friendRequest);
+    friendRequest.author = author;
+    friendRequest.recipient = recipient;
     await this.friendRequestRepository.save(friendRequest);
+  }
+
+  async acceptFriendRequest(id: number): Promise<void> {
+    await this.friendRequestRepository.update(id, {
+      status: 'friends',
+    });
   }
 }

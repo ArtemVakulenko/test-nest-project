@@ -21,6 +21,12 @@ export class FriendRequestController {
     return this.friendRequestService.getAllReqsForMe(id);
   }
 
+  @Get(':id/accept')
+  async acceptFriendRequest(@Param('id') id: number): Promise<void> {
+    console.log(id);
+    return this.friendRequestService.acceptFriendRequest(id);
+  }
+
   @Post()
   async createFriendRequest(
     @Body() createFriendRequestDTO: createFriendRequestDTO,

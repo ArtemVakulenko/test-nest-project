@@ -12,22 +12,34 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(userName: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOneByUserName(userName);
-    const hash = createHash('sha256');
-    hash.update(pass);
-    const hashedPass = hash.digest('hex');
-    if (user && user.password === hashedPass) {
-      const { password, ...userWithoutPassword } = user;
-      return userWithoutPassword;
+  async validateUser(
+    email: string,
+    pass: string,
+    hashed: boolean,
+  ): Promise<any> {
+    if (!hashed) {
+      const user = await this.usersService.findOneByEmail(email);
+      const hash = createHash('sha256');
+      hash.update(pass);
+      const hashedPass = hash.digest('hex');
+      if (user && user.password === hashedPass) {
+        return true;
+      }
+      return false;
     }
-    return null;
+    if (hashed) {
+      const user = await this.usersService.findOneByEmail(email);
+      if (user && user.password === pass) {
+        return true;
+      }
+      return false;
+    }
   }
 
   async login(body: loginDTO): Promise<any> {
     const payload = { email: body.email };
-    const user = await this.validateUser(body.userName, body.password);
-    if (user) {
+    const flag = await this.validateUser(body.email, body.password, false);
+    if (flag) {
       return {
         token: this.jwtService.sign(payload),
       };
@@ -35,6 +47,7 @@ export class AuthService {
   }
 
   async loginGoogle(body: googleLoginDTO): Promise<any> {
+    console.log(body);
     const sameUser = await this.usersService.findOneByEmail(body.email);
     if (!sameUser) {
       await this.usersService.create(body);

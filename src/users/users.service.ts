@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../database/entities/User.entity';
-import { putUserDTO } from './dto/users.dto';
+import { postUserDTO, putUserDTO } from './dto/users.dto';
 import { IUser } from './interface/users.interface';
 import { createHash } from 'crypto';
 
@@ -29,18 +29,21 @@ export class UsersService {
     return this.usersRepository.findOne({ email });
   }
   async uploadFile(file, id) {
-    console.log(file);
     await this.usersRepository.update(id, { avatar: file.filename });
   }
 
-  async create(postUserDTO): Promise<void> {
-    const hash = createHash('sha256');
-    hash.update(postUserDTO.password);
-    const hashedPass = hash.digest('hex');
-    const { userName, email } = postUserDTO;
-    const userToCreate = { userName, password: hashedPass, email };
-    const user = await this.usersRepository.create(userToCreate);
-    await this.usersRepository.save(user);
+  async create(postUserDTO: postUserDTO): Promise<void> {
+    if (postUserDTO.password) {
+      const hash = createHash('sha256');
+      hash.update(postUserDTO.password);
+      const hashedPass = hash.digest('hex');
+      const { userName, email } = postUserDTO;
+      const userToCreate = { userName, password: hashedPass, email };
+      const user = await this.usersRepository.create(userToCreate);
+      await this.usersRepository.save(user);
+    }
+    const userFromProvider = await this.usersRepository.create(postUserDTO);
+    await this.usersRepository.save(userFromProvider);
   }
 
   async createGoogleAccount(postUserDTO): Promise<void> {
