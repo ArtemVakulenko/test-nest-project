@@ -47,7 +47,6 @@ export class AuthService {
   }
 
   async loginGoogle(body: googleLoginDTO): Promise<any> {
-    console.log(body);
     const sameUser = await this.usersService.findOneByEmail(body.email);
     if (!sameUser) {
       await this.usersService.create(body);

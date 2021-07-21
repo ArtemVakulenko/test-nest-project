@@ -29,25 +29,31 @@ export class UsersService {
     return this.usersRepository.findOne({ userName });
   }
 
-  async getMyFriends(id: number): Promise<IFriendRequest[]> {
-    return await this.friendRequestRepository.find({
-      relations: ['recipient'],
-      where: { author: { id }, status: 'friends' },
-    });
+  async getMyFriends(id: number): Promise<any> {
+    return await this.friendRequestRepository.query(
+      `SELECT "recipientId", "userName", "email", "avatar", "status" FROM friend_request_entity
+    RIGHT JOIN user_entity ON user_entity.id = "recipientId"
+    WHERE "authorId"=${id} AND status='friends'
+    GROUP BY "recipientId", "userName", "email", "avatar", "status"`,
+    );
   }
 
   async getMyFollowers(id: number): Promise<IFriendRequest[]> {
-    return await this.friendRequestRepository.find({
-      relations: ['recipient'],
-      where: { author: { id }, status: 'is a follower' },
-    });
+    return await this.friendRequestRepository.query(
+      `SELECT "recipientId", "userName", "email", "avatar", "status" FROM friend_request_entity
+    RIGHT JOIN user_entity ON user_entity.id = "recipientId"
+    WHERE "authorId"=${id} AND status='is a follower'
+    GROUP BY "recipientId", "userName", "email", "avatar", "status"`,
+    );
   }
 
   async getMyLeaders(id: number): Promise<IFriendRequest[]> {
-    return await this.friendRequestRepository.find({
-      relations: ['recipient'],
-      where: { author: { id }, status: 'is a leader' },
-    });
+    return await this.friendRequestRepository.query(
+      `SELECT "recipientId", "userName", "email", "avatar", "status" FROM friend_request_entity
+    RIGHT JOIN user_entity ON user_entity.id = "recipientId"
+    WHERE "authorId"=${id} AND status='is a leader'
+    GROUP BY "recipientId", "userName", "email", "avatar", "status"`,
+    );
   }
 
   findOneByEmail(email: string): Promise<IUser> {
@@ -67,9 +73,10 @@ export class UsersService {
       const userToCreate = { userName, password: hashedPass, email };
       const user = await this.usersRepository.create(userToCreate);
       await this.usersRepository.save(user);
+    } else {
+      const userFromProvider = await this.usersRepository.create(postUserDTO);
+      await this.usersRepository.save(userFromProvider);
     }
-    const userFromProvider = await this.usersRepository.create(postUserDTO);
-    await this.usersRepository.save(userFromProvider);
   }
 
   async createGoogleAccount(postUserDTO): Promise<void> {
