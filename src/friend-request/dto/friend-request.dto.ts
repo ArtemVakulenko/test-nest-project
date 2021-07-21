@@ -10,3 +10,8 @@ export class createFriendRequestDTO {
   authorId: number;
   recipientId: number;
 }
+
+export class acceptFriendRequestDTO {
+  authorId: number;
+  recipientId: number;
+}

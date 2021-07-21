@@ -4,6 +4,7 @@ import { FriendRequestService } from './friend-request.service';
 import {
   IFriendRequest,
   createFriendRequestDTO,
+  acceptFriendRequestDTO,
 } from './dto/friend-request.dto';
 
 @Controller('friend-request')
@@ -21,10 +22,15 @@ export class FriendRequestController {
     return this.friendRequestService.getAllReqsForMe(id);
   }
 
-  @Get(':id/accept')
-  async acceptFriendRequest(@Param('id') id: number): Promise<void> {
+  @Post('/accept')
+  async acceptFriendRequest(
+    @Body() acceptFriendRequestDTO: acceptFriendRequestDTO,
+    @Param('id') id: number,
+  ): Promise<void> {
     console.log(id);
-    return this.friendRequestService.acceptFriendRequest(id);
+    return this.friendRequestService.acceptFriendRequest(
+      acceptFriendRequestDTO,
+    );
   }
 
   @Post()

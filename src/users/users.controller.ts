@@ -1,20 +1,20 @@
 import {
+  Res,
   Get,
   Put,
   Body,
   Post,
   Param,
   Delete,
-  Controller,
   UseGuards,
+  Controller,
   UseInterceptors,
-  Res,
 } from '@nestjs/common';
 import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
   ApiTags,
+  ApiResponse,
+  ApiOperation,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { UserEntity } from '../database/entities/User.entity';
@@ -26,6 +26,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadedFile } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { IFriendRequest } from 'src/friend-request/dto/friend-request.dto';
 
 @ApiBearerAuth()
 @ApiTags('users')
@@ -49,10 +50,25 @@ export class UsersController {
     return this.UsersService.findOne(id);
   }
 
-  @Get('avatars/:id')
-  async serveAvatar(@Param('id') id, @Res() res): Promise<any> {
+  @Get(':id/avatars')
+  async serveAvatar(@Param('id') id: number, @Res() res): Promise<any> {
     const user = await this.UsersService.findOne(id);
     res.sendFile(user.avatar, { root: 'uploads/avatars' });
+  }
+
+  @Get(':id/friends')
+  async getMyFriends(@Param('id') id: number): Promise<IFriendRequest[]> {
+    return this.UsersService.getMyFriends(id);
+  }
+
+  @Get(':id/followers')
+  async getMyFollowers(@Param('id') id: number): Promise<IFriendRequest[]> {
+    return this.UsersService.getMyFollowers(id);
+  }
+
+  @Get(':id/leaders')
+  async getMyLeaders(@Param('id') id: number): Promise<IFriendRequest[]> {
+    return this.UsersService.getMyLeaders(id);
   }
 
   @Post()

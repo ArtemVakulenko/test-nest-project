@@ -4,6 +4,10 @@ import { Controller, Get } from '@nestjs/common';
 export class AppController {
   @Get('successGoogleAuth')
   loginWithGoogle() {
-    return 'google';
+    return 'you have logined with google succesfully';
+  }
+  @Get()
+  qwerty() {
+    return 'hello from nest';
   }
 }

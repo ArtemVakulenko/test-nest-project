@@ -5,12 +5,16 @@ import { UserEntity } from '../database/entities/User.entity';
 import { postUserDTO, putUserDTO } from './dto/users.dto';
 import { IUser } from './interface/users.interface';
 import { createHash } from 'crypto';
+import { FriendRequestEntity } from 'src/database/entities/FriendRequest.entity';
+import { IFriendRequest } from 'src/friend-request/dto/friend-request.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
+    @InjectRepository(FriendRequestEntity)
+    private friendRequestRepository: Repository<FriendRequestEntity>,
   ) {}
 
   findAll(): Promise<IUser[]> {
@@ -25,9 +29,31 @@ export class UsersService {
     return this.usersRepository.findOne({ userName });
   }
 
+  async getMyFriends(id: number): Promise<IFriendRequest[]> {
+    return await this.friendRequestRepository.find({
+      relations: ['recipient'],
+      where: { author: { id }, status: 'friends' },
+    });
+  }
+
+  async getMyFollowers(id: number): Promise<IFriendRequest[]> {
+    return await this.friendRequestRepository.find({
+      relations: ['recipient'],
+      where: { author: { id }, status: 'is a follower' },
+    });
+  }
+
+  async getMyLeaders(id: number): Promise<IFriendRequest[]> {
+    return await this.friendRequestRepository.find({
+      relations: ['recipient'],
+      where: { author: { id }, status: 'is a leader' },
+    });
+  }
+
   findOneByEmail(email: string): Promise<IUser> {
     return this.usersRepository.findOne({ email });
   }
+
   async uploadFile(file, id) {
     await this.usersRepository.update(id, { avatar: file.filename });
   }
