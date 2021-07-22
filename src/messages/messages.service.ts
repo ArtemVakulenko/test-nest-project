@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, Res } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { STATUS_CODES } from 'http';
 import { MessageEntity } from 'src/database/entities/Message.entity';
 import { UserEntity } from 'src/database/entities/User.entity';
 import { Repository } from 'typeorm';
@@ -22,20 +23,21 @@ export class MessagesService {
 
   async getMyMessages(id: number): Promise<IMessage[]> {
     return this.messagesRepository.find({
-      relations: ['author', 'recipient'],
+      relations: ['recipient'],
       where: { author: { id } },
     });
   }
 
   async getMessagesForMe(id: number): Promise<IMessage[]> {
     return this.messagesRepository.find({
-      relations: ['author', 'recipient'],
+      relations: ['author'],
       where: { recipient: { id } },
     });
   }
 
   async createMessage(body: createMessageDTO): Promise<void> {
     const { authorId, recipientId, content } = body;
+    if (authorId === recipientId) return;
     const author = await this.UsersRepository.findOne({ id: authorId });
     const recipient = await this.UsersRepository.findOne({
       id: recipientId,
