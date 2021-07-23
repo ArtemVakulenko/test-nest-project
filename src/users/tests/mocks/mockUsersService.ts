@@ -23,4 +23,12 @@ export const mockUsersService = {
       avatar: '123',
     };
   }),
+  findOneByUserName: jest.fn((id) => {
+    return {
+      id,
+      userName: '123',
+      password: '123',
+      avatar: '123',
+    };
+  }),
 };

@@ -2,8 +2,8 @@ import { Body, Controller, Get, Post, Param, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { IPost } from './interface/posts.interface';
 import { createPostDTO } from '../posts/dto/posts.dto';
-import urls from 'src/constants/urls';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import urls from '../constants/urls';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller(urls.posts)
 @UseGuards(JwtAuthGuard)

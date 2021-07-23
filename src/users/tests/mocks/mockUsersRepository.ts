@@ -1,1 +1,3 @@
-export const mockUsersRepository = {};
+export const mockUsersRepository = {
+  find: jest.fn(),
+};

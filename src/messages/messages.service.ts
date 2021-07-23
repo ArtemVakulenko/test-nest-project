@@ -1,8 +1,7 @@
-import { HttpStatus, Injectable, Res } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { STATUS_CODES } from 'http';
-import { MessageEntity } from 'src/database/entities/Message.entity';
-import { UserEntity } from 'src/database/entities/User.entity';
+import { MessageEntity } from '../database/entities/Message.entity';
+import { UserEntity } from '../database/entities/User.entity';
 import { Repository } from 'typeorm';
 import { createMessageDTO, IMessage } from './dto/messages.dto';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FriendRequestEntity } from 'src/database/entities/FriendRequest.entity';
-import { UserEntity } from 'src/database/entities/User.entity';
+import { FriendRequestEntity } from '../database/entities/FriendRequest.entity';
+import { UserEntity } from '../database/entities/User.entity';
 import { Repository } from 'typeorm';
 import {
   IFriendRequest,

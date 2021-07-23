@@ -3,8 +3,8 @@ import { Repository } from 'typeorm';
 import { PostEntity } from '../database/entities/Post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IComment } from './interface/comments.interface';
-import { UserEntity } from 'src/database/entities/User.entity';
-import { CommentEntity } from 'src/database/entities/Comment.entity';
+import { UserEntity } from '../database/entities/User.entity';
+import { CommentEntity } from '../database/entities/Comment.entity';
 import { createCommentDTO } from './dto/comments.dto';
 
 @Injectable()

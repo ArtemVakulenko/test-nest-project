@@ -3,7 +3,7 @@ import { CommentsService } from './comments.service';
 import { IComment } from './interface/comments.interface';
 import { createCommentDTO } from './dto/comments.dto';
 import urls from '../constants/urls';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller(urls.comments)
 @UseGuards(JwtAuthGuard)
