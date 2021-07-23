@@ -21,12 +21,12 @@ import { UserEntity } from '../database/entities/User.entity';
 import { IUser } from './interface/users.interface';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
 import urls from '../constants/urls';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadedFile } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { IFriendRequest } from 'src/friend-request/dto/friend-request.dto';
+import { IFriendRequest } from '../friend-request/dto/friend-request.dto';
 
 @ApiBearerAuth()
 @ApiTags('users')

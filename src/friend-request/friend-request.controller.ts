@@ -27,7 +27,6 @@ export class FriendRequestController {
     @Body() acceptFriendRequestDTO: acceptFriendRequestDTO,
     @Param('id') id: number,
   ): Promise<void> {
-    console.log(id);
     return this.friendRequestService.acceptFriendRequest(
       acceptFriendRequestDTO,
     );

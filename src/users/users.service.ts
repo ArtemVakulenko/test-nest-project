@@ -5,8 +5,8 @@ import { UserEntity } from '../database/entities/User.entity';
 import { postUserDTO, putUserDTO } from './dto/users.dto';
 import { IUser } from './interface/users.interface';
 import { createHash } from 'crypto';
-import { FriendRequestEntity } from 'src/database/entities/FriendRequest.entity';
-import { IFriendRequest } from 'src/friend-request/dto/friend-request.dto';
+import { FriendRequestEntity } from '../database/entities/FriendRequest.entity';
+import { IFriendRequest } from '../friend-request/dto/friend-request.dto';
 
 @Injectable()
 export class UsersService {

@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { MessagesModule } from './messages/messages.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';
+import { ShrekController } from './shrek/shrek.controller';
+import { ShrekService } from './shrek/shrek.service';
 
 @Module({
   imports: [
@@ -18,6 +20,7 @@ import { FriendRequestModule } from './friend-request/friend-request.module';
     MessagesModule,
     FriendRequestModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ShrekController],
+  providers: [ShrekService],
 })
 export class AppModule {}
