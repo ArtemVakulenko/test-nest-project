@@ -9,12 +9,9 @@ export const mockUsersService = {
       },
     ];
   }),
-  create: jest.fn((dto) => {
-    return {
-      id: 1,
-      ...dto,
-    };
-  }),
+  create: jest.fn(),
+  deleteOne: jest.fn(),
+  updateOne: jest.fn(),
   findOne: jest.fn((id) => {
     return {
       id,
@@ -30,5 +27,36 @@ export const mockUsersService = {
       password: '123',
       avatar: '123',
     };
+  }),
+
+  getMyFriends: jest.fn((id) => {
+    return [
+      {
+        id: 123,
+        userName: '123',
+        password: '123',
+        avatar: '123',
+      },
+    ];
+  }),
+  getMyFollowers: jest.fn((id) => {
+    return [
+      {
+        id: 123,
+        userName: '123',
+        password: '123',
+        avatar: '123',
+      },
+    ];
+  }),
+  getMyLeaders: jest.fn((id) => {
+    return [
+      {
+        id: 123,
+        userName: '123',
+        password: '123',
+        avatar: '123',
+      },
+    ];
   }),
 };
