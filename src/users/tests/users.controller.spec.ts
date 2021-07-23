@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { IUser } from '../interface/users.interface';
 import { UsersController } from '../users.controller';
 import { UsersService } from '../users.service';
 import { mockUsersService } from './mocks/mockUsersService';

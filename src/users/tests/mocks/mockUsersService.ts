@@ -1,5 +1,6 @@
+import { IUser } from '../../../users/interface/users.interface';
 export const mockUsersService = {
-  findAll: jest.fn(() => {
+  findAll: jest.fn((): IUser[] => {
     return [
       {
         id: 123,
