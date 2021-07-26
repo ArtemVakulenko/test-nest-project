@@ -25,7 +25,6 @@ export class FriendRequestController {
   @Post('/accept')
   async acceptFriendRequest(
     @Body() acceptFriendRequestDTO: acceptFriendRequestDTO,
-    @Param('id') id: number,
   ): Promise<void> {
     return this.friendRequestService.acceptFriendRequest(
       acceptFriendRequestDTO,

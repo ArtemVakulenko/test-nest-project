@@ -1,7 +1,7 @@
 import { IUser } from 'src/users/interface/users.interface';
 import { IsInt, Length } from 'class-validator';
 
-export class IMessage {
+export interface IMessage {
   author: IUser;
   recipient: IUser;
   content: string;

@@ -1,7 +1,7 @@
 import { IPost } from 'src/posts/interface/posts.interface';
 import { IUser } from 'src/users/interface/users.interface';
 
-export class IComment {
+export interface IComment {
   id: number;
   content: string;
   parentComment?: IComment;

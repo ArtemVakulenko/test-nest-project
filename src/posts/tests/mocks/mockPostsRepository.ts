@@ -3,9 +3,9 @@ export const mockPostsRepository = {
     return [
       {
         id: 123,
-        userName: '123',
-        password: '123',
-        avatar: '123',
+        content: '123',
+        user: {},
+        likes: 123,
       },
     ];
   }),
@@ -17,9 +17,12 @@ export const mockPostsRepository = {
       avatar: '123',
     };
   }),
-  query: jest.fn(),
-  create: jest.fn(),
+  create: jest.fn(() => {
+    return {
+      id: 123,
+      content: '123',
+    };
+  }),
+  increment: jest.fn(),
   save: jest.fn(),
-  delete: jest.fn(),
-  update: jest.fn(),
 };

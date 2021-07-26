@@ -16,10 +16,9 @@ export class PostsService {
   ) {}
 
   async findAll(): Promise<IPost[]> {
-    const posts = await this.postsRepository.find({
+    return await this.postsRepository.find({
       relations: ['user'],
     });
-    return posts;
   }
 
   findAllByUserId(id: number): Promise<IPost[]> {
@@ -28,7 +27,7 @@ export class PostsService {
       where: { user: { id } },
     });
   }
-  async addLike(id) {
+  async addLike(id: number) {
     await this.postsRepository.increment({ id }, 'likes', 1);
   }
 

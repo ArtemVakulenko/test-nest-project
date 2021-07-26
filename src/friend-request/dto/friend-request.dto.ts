@@ -1,7 +1,7 @@
 import { IUser } from 'src/users/interface/users.interface';
 import { IsInt } from 'class-validator';
 
-export class IFriendRequest {
+export interface IFriendRequest {
   author: IUser;
   recipient: IUser;
   status: string;
