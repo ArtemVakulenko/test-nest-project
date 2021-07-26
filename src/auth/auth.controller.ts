@@ -42,17 +42,20 @@ export class AuthController {
         email: req.user.email,
         provider: 'google',
       });
-      res.redirect('http://localhost:3000/successGoogleAuth');
-    } else res.redirect('http://localhost:3000/login/failure');
+      res.redirect('https://test-nest.pp.ua/successGoogleAuth');
+    } else res.redirect('https://test-nest.pp.ua/loginFailure');
   }
 
   @Get('/facebook/redirect')
   @UseGuards(FacebookAuthGuard)
-  async facebookLoginRedirect(@Req() body): Promise<any> {
-    return {
-      statusCode: HttpStatus.OK,
-      data: body,
-    };
+  async facebookLoginRedirect(@Req() req, @Res() res): Promise<any> {
+    if (req.user) {
+      this.authService.loginFacebook({
+        email: req.user.email,
+        provider: 'facebook',
+      });
+      res.redirect('https://test-nest.pp.ua/successFacebookAuth');
+    } else res.redirect('https://test-nest.pp.ua/loginFailure');
   }
 
   @Post('reg')

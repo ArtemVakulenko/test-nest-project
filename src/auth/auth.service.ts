@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { loginDTO, regDTO } from './dto/auth.dto';
-import { googleLoginDTO } from '../auth/dto/auth.dto';
+import {
+  facebookLoginDTO,
+  loginDTO,
+  regDTO,
+  googleLoginDTO,
+} from './dto/auth.dto';
 import { createHash } from 'crypto';
 
 @Injectable()
@@ -47,6 +51,17 @@ export class AuthService {
   }
 
   async loginGoogle(body: googleLoginDTO): Promise<any> {
+    const sameUser = await this.usersService.findOneByEmail(body.email);
+    if (!sameUser) {
+      await this.usersService.create(body);
+    }
+    const payload = { email: body.email };
+    return {
+      token: this.jwtService.sign(payload),
+    };
+  }
+
+  async loginFacebook(body: facebookLoginDTO): Promise<any> {
     const sameUser = await this.usersService.findOneByEmail(body.email);
     if (!sameUser) {
       await this.usersService.create(body);

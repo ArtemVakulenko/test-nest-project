@@ -60,7 +60,7 @@ export class UsersService {
     return this.usersRepository.findOne({ email });
   }
 
-  async uploadFile(file, id) {
+  async uploadFile(file, id: number) {
     await this.usersRepository.update(id, { avatar: file.filename });
   }
 
@@ -79,7 +79,7 @@ export class UsersService {
     }
   }
 
-  async createGoogleAccount(postUserDTO): Promise<void> {
+  async createGoogleAccount(postUserDTO: postUserDTO): Promise<void> {
     const user = await this.usersRepository.create(postUserDTO);
     await this.usersRepository.save(user);
   }

@@ -28,3 +28,10 @@ export class googleLoginDTO {
 
   provider: string;
 }
+
+export class facebookLoginDTO {
+  @IsEmail()
+  email: string;
+
+  provider: string;
+}

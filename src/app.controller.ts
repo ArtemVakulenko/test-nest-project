@@ -6,8 +6,16 @@ export class AppController {
   loginWithGoogle() {
     return 'you have logined with google succesfully';
   }
-  @Get()
-  qwerty() {
-    return 'hello from nest';
+  @Get('successFacebookAuth')
+  loginWithFacebook() {
+    return 'you have logined with facebook succesfully';
   }
+  @Get('loginFailure')
+  loginFailure() {
+    return 'something went wrong';
+  }
+  // @Get()
+  // qwerty() {
+  //   return 'hello from nest';
+  // }
 }

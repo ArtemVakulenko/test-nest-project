@@ -10,7 +10,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     super({
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_ID,
-      callbackURL: 'http://localhost:3000/facebook/redirect',
+      callbackURL: 'https://test-nest.pp.ua/auth/facebook/redirect',
       scope: 'email',
       profileFields: ['emails', 'name'],
     });
@@ -27,12 +27,8 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
       email: emails[0].value,
       firstName: name.givenName,
       lastName: name.familyName,
-    };
-    const payload = {
-      user,
       accessToken,
     };
-
-    done(null, payload);
+    done(null, user);
   }
 }
