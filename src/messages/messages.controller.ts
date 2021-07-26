@@ -17,6 +17,7 @@ export class MessagesController {
   async getMyMessages(@Param('id') id: number): Promise<IMessage[]> {
     return this.messagesServise.getMyMessages(id);
   }
+
   @Get(':id/recipient')
   async getMessagesForMe(@Param('id') id: number): Promise<IMessage[]> {
     return this.messagesServise.getMessagesForMe(id);
