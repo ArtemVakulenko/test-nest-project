@@ -36,7 +36,9 @@ export class MessagesService {
 
   async createMessage(body: createMessageDTO): Promise<void> {
     const { authorId, recipientId, content } = body;
-    if (authorId === recipientId) return;
+    if (authorId === recipientId) {
+      return;
+    }
     const author = await this.UsersRepository.findOne({ id: authorId });
     const recipient = await this.UsersRepository.findOne({
       id: recipientId,
