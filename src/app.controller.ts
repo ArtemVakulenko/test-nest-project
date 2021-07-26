@@ -14,8 +14,8 @@ export class AppController {
   loginFailure() {
     return 'something went wrong';
   }
-  // @Get()
-  // qwerty() {
-  //   return 'hello from nest';
-  // }
+  @Get()
+  qwerty() {
+    return 'hello from nest';
+  }
 }

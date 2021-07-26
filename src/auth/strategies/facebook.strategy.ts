@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Profile, Strategy } from 'passport-facebook';
+import urls from '../../constants/urls';
 import { config } from 'dotenv';
 config();
 
@@ -10,7 +11,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     super({
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_ID,
-      callbackURL: 'https://test-nest.pp.ua/auth/facebook/redirect',
+      callbackURL: `${urls.localhost}/auth/facebook/redirect`,
       scope: 'email',
       profileFields: ['emails', 'name'],
     });
@@ -27,8 +28,12 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
       email: emails[0].value,
       firstName: name.givenName,
       lastName: name.familyName,
+    };
+    const payload = {
+      user,
       accessToken,
     };
-    done(null, user);
+
+    done(null, payload);
   }
 }

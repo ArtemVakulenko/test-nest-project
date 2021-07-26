@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import { regDTO, loginDTO } from './dto/auth.dto';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { FacebookAuthGuard } from './guards/facebook-auth.guard';
+import urls from '../constants/urls';
 
 @Controller('auth')
 export class AuthController {
@@ -42,20 +43,17 @@ export class AuthController {
         email: req.user.email,
         provider: 'google',
       });
-      res.redirect('https://test-nest.pp.ua/successGoogleAuth');
-    } else res.redirect('https://test-nest.pp.ua/loginFailure');
+      res.redirect(`${urls.active}/successGoogleAuth`);
+    } else res.redirect(`${urls.active}/loginFailure`);
   }
 
   @Get('/facebook/redirect')
   @UseGuards(FacebookAuthGuard)
-  async facebookLoginRedirect(@Req() req, @Res() res): Promise<any> {
-    if (req.user) {
-      this.authService.loginFacebook({
-        email: req.user.email,
-        provider: 'facebook',
-      });
-      res.redirect('https://test-nest.pp.ua/successFacebookAuth');
-    } else res.redirect('https://test-nest.pp.ua/loginFailure');
+  async facebookLoginRedirect(@Req() req): Promise<any> {
+    return {
+      statusCode: HttpStatus.OK,
+      data: req.user,
+    };
   }
 
   @Post('reg')
