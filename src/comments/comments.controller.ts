@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Param, UseGuards } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { IComment } from './interface/comments.interface';
+import { IComment } from './dto/comments.dto';
 import { createCommentDTO } from './dto/comments.dto';
 import urls from '../constants/urls';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../database/entities/User.entity';
 import { postUserDTO, putUserDTO } from './dto/users.dto';
-import { IUser } from './interface/users.interface';
+import { IUser } from './dto/users.dto';
 import { createHash } from 'crypto';
 import { FriendRequestEntity } from '../database/entities/FriendRequest.entity';
 import { IFriendRequest } from '../friend-request/dto/friend-request.dto';

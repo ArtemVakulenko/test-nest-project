@@ -23,7 +23,7 @@ import {
   ApiProduces,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { IUser } from './interface/users.interface';
+import { IUser } from './dto/users.dto';
 import { postUserDTO, putUserDTO } from '../users/dto/users.dto';
 import urls from '../constants/urls';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';

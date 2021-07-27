@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { PostEntity } from '../database/entities/Post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IComment } from './interface/comments.interface';
+import { IComment } from './dto/comments.dto';
 import { UserEntity } from '../database/entities/User.entity';
 import { CommentEntity } from '../database/entities/Comment.entity';
 import { createCommentDTO } from './dto/comments.dto';
