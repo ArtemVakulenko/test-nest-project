@@ -5,6 +5,12 @@ import { UserEntity } from '../../database/entities/User.entity';
 import { UsersService } from '../users.service';
 import { mockUsersRepository } from './mocks/mockUsersRepository';
 import { mockFriendRequestRepository } from './mocks/mockFriendRequestRepository';
+import {
+  mockCreateUserDto,
+  mockIUserArray,
+  mockIUser,
+  mockPutUserDto,
+} from './mocks/mocks';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -31,33 +37,13 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
   it('should find all users', () => {
-    const result = [
-      {
-        id: 123,
-        userName: '123',
-        password: '123',
-        avatar: '123',
-      },
-    ];
-    expect(service.findAll()).toEqual(result);
+    expect(service.findAll()).toEqual(mockIUserArray);
   });
   it('should find one by id user', () => {
-    const result = {
-      id: 123,
-      userName: '123',
-      password: '123',
-      avatar: '123',
-    };
-    expect(service.findOne(123)).toEqual(result);
+    expect(service.findOne(123)).toEqual(mockIUser);
   });
   it('should find one by user name', () => {
-    const result = {
-      id: 123,
-      userName: '123',
-      password: '123',
-      avatar: '123',
-    };
-    expect(service.findOneByUserName('123')).toEqual(result);
+    expect(service.findOneByUserName('123')).toEqual(mockIUser);
   });
   it('should return users friends', async () => {
     expect(await service.getMyFriends(1)).toEqual(undefined);
@@ -69,47 +55,23 @@ describe('UsersService', () => {
     expect(await service.getMyLeaders(1)).toEqual(undefined);
   });
   it('should find one by email', async () => {
-    const result = {
-      id: 123,
-      userName: '123',
-      password: '123',
-      avatar: '123',
-    };
-    expect(await service.findOneByEmail('123')).toEqual(result);
+    expect(await service.findOneByEmail('123')).toEqual(mockIUser);
   });
   it('should create account', async () => {
-    const dto = {
-      userName: '123',
-      password: '123',
-      email: '123',
-    };
-    expect(await service.create(dto)).toEqual(undefined);
+    expect(await service.create(mockCreateUserDto)).toEqual(undefined);
   });
-  it('should provider account', async () => {
-    const dto = {
-      userName: '123',
-      email: '123',
-    };
-    expect(await service.create(dto)).toEqual(undefined);
+  it('should create provider account', async () => {
+    expect(await service.create(mockCreateUserDto)).toEqual(undefined);
   });
   it('should create google account', async () => {
-    const dto = {
-      userName: '123',
-      password: '123',
-      email: '123',
-    };
-    expect(await service.createGoogleAccount(dto)).toEqual(undefined);
+    expect(await service.createGoogleAccount(mockCreateUserDto)).toEqual(
+      undefined,
+    );
   });
   it('should delete account', async () => {
     expect(await service.deleteOne(1)).toEqual(undefined);
   });
   it('should update google account', async () => {
-    const dto = {
-      id: 123,
-      userName: '123',
-      password: '123',
-      email: '123',
-    };
-    expect(await service.updateOne(dto)).toEqual(undefined);
+    expect(await service.updateOne(mockPutUserDto)).toEqual(undefined);
   });
 });
