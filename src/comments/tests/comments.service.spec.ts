@@ -36,43 +36,56 @@ describe('PostsService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-  // it('should find all user-made requests', async () => {
-  //   const result = [
-  //     {
-  //       author: { id: 1 },
-  //       recipient: { id: 2 },
-  //       status: '123',
-  //     },
-  //   ];
-  //   expect(await service.getAllMyReq(1)).toEqual(result);
-  //   expect(mockFriendRequestRepository.find).toHaveBeenCalled();
-  // });
-  // it('should find all requests for me', async () => {
-  //   const result = [
-  //     {
-  //       author: { id: 1 },
-  //       recipient: { id: 2 },
-  //       status: '123',
-  //     },
-  //   ];
-  //   expect(await service.getAllReqsForMe(1)).toEqual(result);
-  //   expect(mockFriendRequestRepository.find).toHaveBeenCalled();
-  // });
-  // it('should create friend requests', async () => {
-  //   const dto = {
-  //     authorId: 5,
-  //     recipientId: 10,
-  //   };
-  //   expect(await service.createFriendRequest(dto)).toEqual(undefined);
-  //   expect(mockFriendRequestRepository.findOne).toHaveBeenCalledTimes(2);
-  // });
-  // it('should accept friend requests', async () => {
-  //   const dto = {
-  //     authorId: 2,
-  //     recipientId: 3,
-  //   };
-  //   expect(await service.acceptFriendRequest(dto)).toEqual(undefined);
-  //   expect(mockFriendRequestRepository.findOne).toHaveBeenCalled();
-  //   expect(mockFriendRequestRepository.update).toHaveBeenCalled();
-  // });
+  it('should find all comments', async () => {
+    const result = [
+      {
+        id: 123,
+        content: '123',
+        user: {},
+        post: {},
+        likes: 123,
+      },
+    ];
+    expect(await service.findAll()).toEqual(result);
+    expect(mockCommentsRepository.find).toHaveBeenCalled();
+  });
+  it('should find all comments by postId', async () => {
+    const result = [
+      {
+        id: 123,
+        content: '123',
+        user: {},
+        post: {},
+        likes: 123,
+      },
+    ];
+    expect(await service.findAllByPostId(123)).toEqual(result);
+    expect(mockCommentsRepository.find).toHaveBeenCalled();
+  });
+  it('should find all comments by userId', async () => {
+    const result = [
+      {
+        id: 123,
+        content: '123',
+        user: {},
+        post: {},
+        likes: 123,
+      },
+    ];
+    expect(await service.findAllByUserId(123)).toEqual(result);
+    expect(mockCommentsRepository.find).toHaveBeenCalled();
+  });
+  it('should add like to a comment', async () => {
+    expect(await service.addLike(123)).toEqual(undefined);
+    expect(mockCommentsRepository.increment).toHaveBeenCalled();
+  });
+  it('should create a comment', async () => {
+    const dto = {
+      content: '123',
+      userId: 123,
+      postId: 123,
+    }
+    expect(await service.createComment(dto)).toEqual(undefined);
+    expect(mockCommentsRepository.create).toHaveBeenCalled();
+  });
 });

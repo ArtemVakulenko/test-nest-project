@@ -16,4 +16,5 @@ export const mockCommentsRepository = {
       content: dto.content,
     };
   }),
+  save: jest.fn()
 };
