@@ -12,12 +12,15 @@ import {
 } from '@nestjs/common';
 import {
   ApiTags,
+  ApiBody,
+  ApiParam,
+  ApiConsumes,
   ApiOperation,
   ApiBearerAuth,
   ApiOkResponse,
   ApiCreatedResponse,
-  ApiBody,
   ApiUnauthorizedResponse,
+  ApiProduces,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { IUser } from './interface/users.interface';
@@ -56,6 +59,7 @@ export class UsersController {
 
   @Get(':id/avatars')
   @ApiOperation({ summary: 'get avatars by user id' })
+  @ApiProduces('multipart/form-data')
   @ApiOkResponse()
   @ApiUnauthorizedResponse({ type: unAuthResponse })
   async serveAvatar(@Param('id') id: number, @Res() res): Promise<any> {
@@ -98,6 +102,14 @@ export class UsersController {
   @Post(':id/upload')
   @ApiOperation({ summary: 'uploads user avatar' })
   @ApiCreatedResponse()
+  @ApiConsumes('multipart/form-data')
+  @ApiParam({ name: 'id' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { file: { type: 'string', format: 'binary' } },
+    },
+  })
   @ApiUnauthorizedResponse({ type: unAuthResponse })
   @UseInterceptors(
     FileInterceptor('file', {
