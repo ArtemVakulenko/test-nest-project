@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from '../users/users.module';
 import { AuthService } from './auth.service';
-import { LocalStrategy } from './strategies/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
@@ -18,13 +17,7 @@ const jwtConfig = {
 
 @Module({
   imports: [UsersModule, PassportModule, JwtModule.register(jwtConfig)],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-    GoogleStrategy,
-    FacebookStrategy,
-  ],
+  providers: [AuthService, JwtStrategy, GoogleStrategy, FacebookStrategy],
   controllers: [AuthController],
   exports: [AuthService, JwtModule, GoogleStrategy, FacebookStrategy],
 })
