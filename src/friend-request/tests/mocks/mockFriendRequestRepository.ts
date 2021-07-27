@@ -2,6 +2,7 @@ export const mockFriendRequestRepository = {
   find: jest.fn(() => {
     return [
       {
+        id: 123,
         author: { id: 1 },
         recipient: { id: 2 },
         status: '123',
@@ -10,6 +11,7 @@ export const mockFriendRequestRepository = {
   }),
   findOne: jest.fn(({ id }) => {
     return {
+      id: 123,
       author: { id: 1 },
       recipient: { id: 2 },
       status: '123',

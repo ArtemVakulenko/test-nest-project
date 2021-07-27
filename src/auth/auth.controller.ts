@@ -1,18 +1,18 @@
 import {
-  Controller,
-  Post,
-  Body,
-  Get,
-  UseGuards,
-  Req,
   Res,
+  Get,
+  Req,
+  Body,
+  Post,
+  Controller,
+  UseGuards,
   HttpStatus,
 } from '@nestjs/common';
 import {
   ApiTags,
-  ApiCreatedResponse,
-  ApiOperation,
   ApiBody,
+  ApiOperation,
+  ApiCreatedResponse,
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { regDTO, loginDTO } from './dto/auth.dto';
@@ -37,14 +37,14 @@ export class AuthController {
   @Get('google')
   @ApiOperation({ summary: 'authorize with google' })
   @UseGuards(GoogleAuthGuard)
-  async googleLogin(): Promise<any> {
+  async googleLogin(): Promise<number> {
     return HttpStatus.OK;
   }
 
   @Get('facebook')
   @ApiOperation({ summary: 'authorize with facebook' })
   @UseGuards(FacebookAuthGuard)
-  async facebookLogin(): Promise<any> {
+  async facebookLogin(): Promise<number> {
     return HttpStatus.OK;
   }
 

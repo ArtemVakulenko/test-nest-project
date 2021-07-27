@@ -33,6 +33,7 @@ describe('PostsService', () => {
   it('should find all user-made requests', async () => {
     const result = [
       {
+        id: 123,
         author: { id: 1 },
         recipient: { id: 2 },
         status: '123',
@@ -44,6 +45,7 @@ describe('PostsService', () => {
   it('should find all requests for me', async () => {
     const result = [
       {
+        id: 123,
         author: { id: 1 },
         recipient: { id: 2 },
         status: '123',
