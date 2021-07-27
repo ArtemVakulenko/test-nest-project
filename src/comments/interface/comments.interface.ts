@@ -1,11 +1,23 @@
-import { IPost } from 'src/posts/interface/posts.interface';
-import { IUser } from 'src/users/interface/users.interface';
+import { IPost } from '../../posts/interface/posts.interface';
+import { IUser } from '../../users/interface/users.interface';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export interface IComment {
+export class IComment {
+  @ApiProperty({ type: Number })
   id: number;
+
+  @ApiProperty({ type: String })
   content: string;
+
+  @ApiPropertyOptional()
   parentComment?: IComment;
+
+  @ApiProperty()
   user: IUser;
+
+  @ApiProperty()
   post: IPost;
+
+  @ApiProperty({ type: Number })
   likes: number;
 }

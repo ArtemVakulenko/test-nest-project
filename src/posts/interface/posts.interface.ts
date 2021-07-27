@@ -1,8 +1,16 @@
-import { IUser } from 'src/users/interface/users.interface';
+import { IUser } from '../../users/interface/users.interface';
+import { ApiProperty } from '@nestjs/swagger';
 
-export interface IPost {
+export class IPost {
+  @ApiProperty({ type: Number })
   id: number;
+
+  @ApiProperty({ type: String })
   content: string;
+
+  @ApiProperty()
   user: IUser;
+
+  @ApiProperty({ type: Number })
   likes: number;
 }
